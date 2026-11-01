@@ -9,25 +9,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Contact extends Model
 {
+    use HasFactory;
+
+
     protected $fillable = [
         'first_name',
         'last_name',
         'gender',
         'email',
-        'tell_1',
-        'tell_2',
-        'tell_3',
+        'tel1',
+        'tel2',
+        'tel3',
         'address',
-        'building_name',
+        'building',
         'category_id',
         'body',
     ];
+
+
     public function category(): BelongsTo
     {
-        return $this->BelongsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
+
+
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'contact_tags')
+            ->withTimestamps();
     }
 }
