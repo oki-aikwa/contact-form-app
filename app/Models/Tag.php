@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-    protected $fillable = [
-        'name',
-    ];
+    use HasFactory;
+
+    protected $fillable = ['name'];
+
+    
+    
     public function contacts(): BelongsToMany
     {
-        return $this->belongsToMany(Contact::class);
+        return $this->belongsToMany(Contact::class, 'contact_tags')
+                    ->withTimestamps();
     }
 }
+
