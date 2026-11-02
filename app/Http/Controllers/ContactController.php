@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ContactController
 {
-    /**
-     * 1. 入力画面の表示
-     */
+
     public function index()
     {
         $categories = Category::all();
@@ -22,21 +20,12 @@ class ContactController
         return view('contact.index', compact('categories', 'tags'));
     }
 
-    /**
-     * 2. 確認画面の表示
-     */
-    /**
-     * 2. 確認画面の表示
-     */
-    /**
-     * 2. 確認画面の表示
-     */
+
     public function confirm(StoreContactRequest $request)
     {
         $validated = $request->validated();
 
-        // 【重要】ビュー側の {{ $validated['tel'] }} でエラーを出さないために、
-        // ここで 3分割の番号をハイフンで結んで「tel」というキーを作っておきます
+
         $validated['tel'] = $validated['tel1'] . '-' . $validated['tel2'] . '-' . $validated['tel3'];
 
         $category = Category::find($validated['category_id']);
@@ -47,7 +36,7 @@ class ContactController
 
         $selectedTags = isset($validated['tag_ids']) ? Tag::whereIn('id', $validated['tag_ids'])->get() : collect();
 
-        // 結合した「tel」も含めた状態でセッションに保存
+
         $request->session()->put('contact_form_inputs', $validated);
 
         return view('contact.confirm', compact('validated', 'category', 'selectedTags'));
@@ -83,9 +72,7 @@ class ContactController
         return redirect()->route('contacts.thanks');
     }
 
-    /**
-     * 4. 完了画面（Thank you）の表示
-     */
+
     public function thanks()
     {
         return view('contact.thanks');
