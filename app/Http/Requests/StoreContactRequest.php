@@ -6,17 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreContactRequest extends FormRequest
 {
-    /**
-     * リクエストの承認チェック
-     */
+
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * バリデーションルールの定義
-     */
     public function rules(): array
     {
         return [
