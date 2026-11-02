@@ -3,34 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 use Illuminate\Http\Request;
 
-class TagController
+class TagController extends Controller
 {
 
-    public function index()
+    public function store(StoreTagRequest $request)
     {
-        $tags = Tag::all();
-        return view('tags.index', compact('tags'));
-    }
-
-
-    public function create()
-    {
-        return redirect()->route('contacts.index');
-    }
-
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:50', 'unique:tags,name'],
-        ]);
 
         Tag::create([
-            'name' => $request->name,
+            'name' => $request->name
         ]);
 
-        return redirect()->route('contacts.index')->with('success', 'タグを追加しました');
+        return redirect()->route('admin.index');
+    }
+
+
+    public function edit(Tag $tag)
+    {
+        return view('admin.tags.edit', compact('tag'));
+    }
+
+    public function update(UpdateTagRequest $request, Tag $tag)
+    {
+
+        $tag->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('admin.index');
+    }
+
+    public function destroy(Tag $tag)
+    {
+        $tag->delete();
+
+        return redirect()->route('admin.index');
     }
 }
