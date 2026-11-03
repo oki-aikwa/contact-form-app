@@ -34,12 +34,12 @@ class ContactController
             $category->content = $category->name;
         }
 
-        $selectedTags = isset($validated['tag_ids']) ? Tag::whereIn('id', $validated['tag_ids'])->get() : collect();
+        $tags = isset($validated['tag_ids']) ? Tag::whereIn('id', $validated['tag_ids'])->get() : collect();
 
 
         $request->session()->put('contact_form_inputs', $validated);
 
-        return view('contact.confirm', compact('validated', 'category', 'selectedTags'));
+        return view('contact.confirm', compact('validated', 'category', 'tags'));
     }
 
 
@@ -50,7 +50,6 @@ class ContactController
         if ($request->has('back') || !$validated) {
             return redirect()->route('contacts.index')->withInput($validated);
         }
-
         DB::transaction(function () use ($validated) {
             Contact::create([
                 'first_name' => $validated['first_name'],
@@ -65,10 +64,12 @@ class ContactController
                 'category_id' => $validated['category_id'],
                 'body' => $validated['detail'],
             ]);
+            if (isset($validated['tag_ids'])) {
+                $contact = Contact::latest()->first();
+                $contact->tags()->attach($validated['tag_ids']);
+            }
         });
-
         $request->session()->forget('contact_form_inputs');
-
         return redirect()->route('contacts.thanks');
     }
 
