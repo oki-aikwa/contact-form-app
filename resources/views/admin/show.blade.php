@@ -49,7 +49,8 @@
                         <span class="text-sm font-medium text-white">電話番号</span>
                     </div>
                     <div class="col-span-2 bg-white px-6 py-4 flex items-center">
-                        <span class="text-[#6b5744]">{{ $contact->tel }}</span>
+                        <span
+                            class="text-[#6b5744]">{{ $contact->tel1 }}-{{ $contact->tel2 }}-{{ $contact->tel3 }}</span>
                     </div>
                 </div>
 
@@ -78,7 +79,7 @@
                         <span class="text-sm font-medium text-white">お問い合わせの種類</span>
                     </div>
                     <div class="col-span-2 bg-white px-6 py-4 flex items-center">
-                        <span class="text-[#6b5744]">{{ $contact->category->content ?? '' }}</span>
+                        <span class="text-[#6b5744]">{{ $contact->category->name ?? '' }}</span>
                     </div>
                 </div>
 
@@ -98,7 +99,7 @@
                         <span class="text-sm font-medium text-white">お問い合わせ内容</span>
                     </div>
                     <div class="col-span-2 bg-white px-6 py-4 flex items-start">
-                        <span class="text-[#6b5744] whitespace-pre-wrap">{{ $contact->detail }}</span>
+                        <span class="text-[#6b5744] whitespace-pre-wrap">{{ $contact->body }}</span>
                     </div>
                 </div>
             </div>
