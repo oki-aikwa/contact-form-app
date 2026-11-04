@@ -369,20 +369,17 @@ _Migrations_: データベースのバージョン管理およびテーブル構
 
 ローカル開発環境（Docker / Laravel Sail）の起動中にアクセス可能なURL一覧です。
 
-| サービス名                         | アクセスURL                                    | 概要                                                                          |
-| :--------------------------------- | :--------------------------------------------- | :---------------------------------------------------------------------------- |
-| **phpMyAdmin（データベース管理）** | [http://localhost:8080](http://localhost:8080) | データベース（MySQL）のデータやテーブル構造をブラウザから確認・管理できます。 |
-
-|お問い合わせ入力フォーム｜[http://localhost]｜お問い合わせの作成できます。|
-|お問い合わせフォーム確認|[http://localhost/contacts/confirm]|お問い合わせが間違いないか確認できます。|
-|サンクスページ|[http://localhost/thanks]|お問い合わせ送信後「お問い合わせありがとうございました」が表示されます。|
-|管理者登録画面|[http://localhost/register]|管理者を登録できます。（登録後管理者画面に移行します。|
-|管理者ログイン画面|[http://localhost/login]|登録されている管理者はここからログインできます。|
-|管理画面|[http://localhost/admim]|どんなお問い合わせが来たか確認できます。タグの追加や削除ができます。|
-|お問い合わせ詳細画面|[http://localhost/admin/contacts/{$id}]|お問い合わせの詳細が見れます。削除もできます。|
-|タグ編集ページ|[http://localhost/admin/tags/{$id}/edit]|既存のタグを編集できます。|
-
----
+| サービス名 / 画面名                    | アクセスURL                                                                      | 概要                                                                          |
+| :------------------------------------- | :------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| **phpMyAdmin**<br>（データベース管理） | [http://localhost:8080](http://localhost:8080)                                   | データベース（MySQL）のデータやテーブル構造をブラウザから確認・管理できます。 |
+| **お問い合わせ入力フォーム**           | [http://localhost](http://localhost)                                             | お問い合わせを作成できます（初期表示画面）。                                  |
+| **お問い合わせフォーム確認**           | [http://localhost/contacts/confirm](http://localhost/contacts/confirm)           | 入力内容が間違っていないか確認できます。                                      |
+| **サンクスページ**                     | [http://localhost/thanks](http://localhost/thanks)                               | お問い合わせ送信後、「お問い合わせありがとうございました」が表示されます。    |
+| **管理者登録画面**                     | [http://localhost/register](http://localhost/register)                           | 管理者を新しく登録できます。（登録後は管理者画面に移行します）                |
+| **管理者ログイン画面**                 | [http://localhost/login](http://localhost/login)                                 | 登録されている管理者はここからログインできます。                              |
+| **管理画面トップ**                     | [http://localhost/admin](http://localhost/admin)                                 | どんなお問い合わせが来たか確認できます。タグの追加や削除ができます。          |
+| **お問い合わせ詳細画面**               | [http://localhost/admin/contacts/{$id}](http://localhost/admin/contacts/{$id})   | お問い合わせの詳細が見られます。削除もできます。                              |
+| **タグ編集ページ**                     | [http://localhost/admin/tags/{$id}/edit](http://localhost/admin/tags/{$id}/edit) | 既存のタグを編集できます。                                                    |
 
 ## 作成者
 
