@@ -11,7 +11,6 @@ class Contact extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'first_name',
         'last_name',
@@ -31,7 +30,6 @@ class Contact extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
 
     public function tags(): BelongsToMany
     {

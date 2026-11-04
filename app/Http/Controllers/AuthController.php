@@ -25,16 +25,13 @@ class AuthController
     {
         $validated = $request->validated();
 
-
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-
         Auth::login($user);
-
 
         return redirect('/admin');
     }
@@ -50,7 +47,6 @@ class AuthController
     {
         $throttleKey = strtolower($request->input('email')) . '|' . $request->ip();
 
-
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
             throw ValidationException::withMessages([
@@ -65,12 +61,8 @@ class AuthController
             $request->session()->regenerate();
             RateLimiter::clear($throttleKey);
 
-
             return redirect('/admin');
         }
-
-
-
 
         throw ValidationException::withMessages([
             'email' => ['ログイン情報が登録されていません'],
