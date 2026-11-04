@@ -14,12 +14,12 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
 
-    public function index(IndexContactRequest $request)
+    public function index(Request $request)
     {
         $query = $this->buildSearchQuery($request);
 
 
-        $contacts = $query->paginate(7)->withQueryString();
+        $contacts = $query->paginate(7);
         $categories = Category::all();
         $tags = Tag::all();
         $genderLabels = [
@@ -54,7 +54,7 @@ class AdminController extends Controller
         $response = new StreamedResponse(function () use ($contacts) {
             $stream = fopen('php://output', 'w');
             fwrite($stream, pack('C*', 0xEF, 0xBB, 0xBF));
-            fputcsv($stream, ['id', '氏名', '性別', 'メールアドレス', '電話番号', '住所', '建物名', 'お問い合わせの種類', 'お問い合わせ内容', '作成日時']);
+            fputcsv($stream, ['id', '氏名', '性別', 'メールアドレス', '電話番号', '住所', '建物名', 'お問い合わせの種類', 'タグ', 'お問い合わせ内容', '作成日時']);
             $genderMap = [1 => '男性', 2 => '女性', 3 => 'その他'];
             foreach ($contacts as $contact) {
                 fputcsv($stream, [
@@ -62,12 +62,12 @@ class AdminController extends Controller
                     $contact->last_name . ' ' . $contact->first_name,
                     $genderMap[$contact->gender] ?? 'その他',
                     $contact->email,
-                    $contact->tel,
+                    $contact->tel1 . '-' . $contact->tel2 . '-' . $contact->tel3,
                     $contact->address,
                     $contact->building,
-                    $contact->category->name ?? '',
-                    $contact->tags->name ?? '',
-                    $contact->detail,
+                    optional($contact->category)->name ?? '',
+                    $contact->tags->implode('name', ', ') ?? '',
+                    $contact->body,
                     $contact->created_at->format('Y-m-d H:i:s'),
                 ]);
             }
@@ -88,20 +88,22 @@ class AdminController extends Controller
 
         return redirect('/login');
     }
-    private function buildSearchQuery(IndexContactRequest $request)
+    private function buildSearchQuery(Request $request)
     {
         $query = Contact::query()->with(['category', 'tags']);
 
-        if ($request->filled('Keyword')) {
-            $keyword = $request->Keyword;
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
             $query->where(function ($q) use ($keyword) {
-                $q->where('first_name', 'like', "%{$keyword}%")
-                    ->orWhere('last_name', 'like', "%{$keyword}%")
-                    ->orWhere('email', 'like', "%{$keyword}%");
+                $q->where(function ($subQ) use ($keyword) {
+                    $subQ->where('first_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('email', 'like', '%' . $keyword . '%');
+                });
             });
         }
 
-        if ($request->filled('gender') && $request->gender !== 'all') {
+        if ($request->input('gender') !== null && $request->input('gender') !== '' && $request->input('gender') !== 'all' && $request->input('gender') !== '0') {
             $query->where('gender', $request->gender);
         }
 

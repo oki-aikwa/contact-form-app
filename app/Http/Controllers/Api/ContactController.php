@@ -18,7 +18,7 @@ class ContactController extends Controller
     {
         $query = Contact::query();
         if ($request->filled('keyword')) {
-            $query->where('content', 'like', '%' . $request->keyword . '%');
+            $query->where('body', 'like', '%' . $request->keyword . '%');
         }
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);

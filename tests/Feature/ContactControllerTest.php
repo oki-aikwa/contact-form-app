@@ -29,7 +29,8 @@ class ContactControllerTest extends TestCase
         $tag1 = Tag::factory()->create(['name' => '質問']);
         $tag2 = Tag::factory()->create(['name' => '要望']);
         $validData = [
-            'last_name' => 'テスト',
+            'first_name' => '山田',
+            'last_name' => '太郎',
             'gender' => 1,
             'email' => 'test@example.com',
             'tel1' => '0-9',
@@ -38,7 +39,6 @@ class ContactControllerTest extends TestCase
             'address' => '東京都',
             'building' => 'テストビル',
             'category_id' => $category->id,
-            'body' => 'これは機能テストの本文です。',
             'detail' => 'これは機能テストの本文です。',
             'tag_ids' => [$tag1->id, $tag2->id]
         ];
@@ -52,7 +52,7 @@ class ContactControllerTest extends TestCase
         $response->assertRedirect(route('contacts.thanks'));
 
         $this->assertDatabaseHas('contacts', [
-            'first_name' => '太郎',
+            'first_name' => '山田',
             'email' => 'test@example.com',
         ]);
 

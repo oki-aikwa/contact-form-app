@@ -14,7 +14,7 @@ class IndexContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Keyword' => 'nullable|string|max:255',
+            'keyword' => 'nullable|string|max:255',
             'gender' => 'nullable|string',
             'category_id' => 'nullable|integer|exists:categories,id',
             'date' => 'nullable|date_format:Y-m-d',
