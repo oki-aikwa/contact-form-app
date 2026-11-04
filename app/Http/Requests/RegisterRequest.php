@@ -12,7 +12,6 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
-
     public function rules(): array
     {
         return [
@@ -21,7 +20,6 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string|min:8|confirmed',
         ];
     }
-
 
     public function messages(): array
     {

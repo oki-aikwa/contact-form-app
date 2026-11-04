@@ -13,9 +13,6 @@ class CategoryControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * CategoryController に関連するバリデーション：存在しないカテゴリIDの拒否
-     */
     public function test_category_controller_invalid_id_is_rejected()
     {
         $request = new StoreContactRequest();
@@ -29,7 +26,7 @@ class CategoryControllerTest extends TestCase
             'tel2' => '1234',
             'tel3' => '5678',
             'address' => '東京都...',
-            'category_id' => 99999, // 存在しないカテゴリID
+            'category_id' => 99999,
             'body' => 'テスト本文',
         ];
 

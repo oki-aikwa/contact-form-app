@@ -11,14 +11,13 @@ class IndexContactRequest extends FormRequest
         return true;
     }
 
-
     public function rules(): array
     {
         return [
             'Keyword' => 'nullable|string|max:255',
-            'gender' => 'nullable|string', // 'all', '1', '2', '3' などが入るためstring
-            'category_id' => 'nullable|integer|exists:categories,id', // 存在するカテゴリIDかチェック
-            'date' => 'nullable|date_format:Y-m-d', // 日付の形式をチェック
+            'gender' => 'nullable|string',
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'date' => 'nullable|date_format:Y-m-d',
         ];
     }
 

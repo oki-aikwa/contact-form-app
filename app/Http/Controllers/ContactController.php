@@ -20,11 +20,9 @@ class ContactController
         return view('contact.index', compact('categories', 'tags'));
     }
 
-
     public function confirm(StoreContactRequest $request)
     {
         $validated = $request->validated();
-
 
         $validated['tel'] = $validated['tel1'] . '-' . $validated['tel2'] . '-' . $validated['tel3'];
 
@@ -41,7 +39,6 @@ class ContactController
 
         return view('contact.confirm', compact('validated', 'category', 'tags'));
     }
-
 
     public function store(Request $request)
     {
@@ -72,7 +69,6 @@ class ContactController
         $request->session()->forget('contact_form_inputs');
         return redirect()->route('contacts.thanks');
     }
-
 
     public function thanks()
     {

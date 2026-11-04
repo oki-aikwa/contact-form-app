@@ -53,12 +53,9 @@ class AdminController extends Controller
 
         $response = new StreamedResponse(function () use ($contacts) {
             $stream = fopen('php://output', 'w');
-            fwrite($stream, pack('C*', 0xEF, 0xBB, 0xBF)); // BOM付き設定
-
+            fwrite($stream, pack('C*', 0xEF, 0xBB, 0xBF));
             fputcsv($stream, ['id', '氏名', '性別', 'メールアドレス', '電話番号', '住所', '建物名', 'お問い合わせの種類', 'お問い合わせ内容', '作成日時']);
-
             $genderMap = [1 => '男性', 2 => '女性', 3 => 'その他'];
-
             foreach ($contacts as $contact) {
                 fputcsv($stream, [
                     $contact->id,
@@ -82,7 +79,6 @@ class AdminController extends Controller
 
         return $response;
     }
-
 
     public function logout(Request $request)
     {
